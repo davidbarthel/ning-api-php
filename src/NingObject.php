@@ -1,17 +1,6 @@
 <?php
 
-require_once('NingApi.php');
-require_once('NingBlogPost.php');
-require_once('NingDiscussion.php');
-require_once('NingPhoto.php');
-require_once('NingBundle.php');
-require_once('NingUser.php');
-require_once('NingMemberCategory.php');
-require_once('NingComment.php');
-require_once('NingNetwork.php');
-require_once('NingSitePage.php');
-require_once('NingGroup.php');
-require_once('NingMessage.php');
+namespace Ning\NingApiHelper;
 
 abstract class NingObject {
 

@@ -1,4 +1,7 @@
 <?php
+
+namespace Ning\NingApiHelper;
+
 /**
  * Abstract base class for file uploads of NingUploadBinary and NingUploadFile
  *

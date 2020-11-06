@@ -1,5 +1,7 @@
 <?php
 
+namespace Ning\NingApiHelper;
+
 /**
  * Upload representing literal data in a variable
  */

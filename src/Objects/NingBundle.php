@@ -1,6 +1,8 @@
 <?php
 
-require_once('NingObject.php');
+namespace Ning\NingApiHelper\Objects;
+
+use Ning\NingApiHelper\NingObject;
 
 class NingBundle extends NingObject {
 

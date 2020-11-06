@@ -1,5 +1,7 @@
 <?php
 
+namespace Ning\NingApiHelper;
+
 /**
  * Upload representing a local file
  */

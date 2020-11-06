@@ -1,7 +1,7 @@
 <?php
 
-require_once('NingApi.php');
-require_once('TestConfig.php');
+
+use Ning\NingApiHelper\NingApi;
 
 class TokenTest extends PHPUnit_Framework_TestCase {
 

@@ -1,6 +1,8 @@
 <?php
 
-class NingException extends Exception {
+namespace Ning\NingApiHelper;
+
+class NingException extends \Exception {
 
     // HTTP status code
     private $httpStatus;

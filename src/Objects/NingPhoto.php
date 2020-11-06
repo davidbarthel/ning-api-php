@@ -1,27 +1,25 @@
 <?php
 
-require_once('NingObject.php');
+namespace Ning\NingApiHelper\Objects;
 
-class NingBlogPost extends NingObject {
+use Ning\NingApiHelper\NingObject;
 
-    protected $objectKey = 'BlogPost';
+class NingPhoto extends NingObject {
+
+    protected $objectKey = 'Photo';
+
     protected $extraFields = array(
         'title',
         'description',
         'url',
-        'excerpt',
         'imageUrl',
-        'bundleId',
-        'publishTime',
-        'publishStatus',
-        'featureTime',
-        'slug',
-        'tagNames',
-        'approved',
         'imageId',
         'imageWidth',
         'imageHeight',
         'imageRotation',
+        'featureTime',
+        'slug',
+        'tagNames',
         'categoryNames',
         'author.fullName',
         'author.url',

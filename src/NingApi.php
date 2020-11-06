@@ -1,14 +1,13 @@
 <?php
 
-define('SRC_PATH', __DIR__);
-define('OBJECTS_PATH', SRC_PATH . '/objects');
-set_include_path(get_include_path() . PATH_SEPARATOR . SRC_PATH . PATH_SEPARATOR . OBJECTS_PATH);
-require_once('OAuth.php');
-require_once('NingException.php');
-require_once('NingObject.php');
-require_once('NingUpload.php');
-require_once('NingUploadFile.php');
-require_once('NingUploadBinary.php');
+namespace Ning\NingApiHelper;
+
+use Exception;
+use Ning\NingApiHelper\Objects\NingBlogPost;
+use Ning\NingApiHelper\Objects\NingComment;
+use Ning\NingApiHelper\Objects\NingNetwork;
+use Ning\NingApiHelper\Objects\NingPhoto;
+use Ning\NingApiHelper\Objects\NingUser;
 
 
 class NingApi {
