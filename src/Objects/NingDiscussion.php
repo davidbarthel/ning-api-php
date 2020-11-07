@@ -4,7 +4,8 @@ namespace Ning\NingApiHelper\Objects;
 
 use Ning\NingApiHelper\NingObject;
 
-class NingDiscussion extends NingObject {
+class NingDiscussion extends NingObject
+{
 
     protected $objectKey = 'Discussion';
     protected $extraFields = array(
@@ -18,6 +19,6 @@ class NingDiscussion extends NingObject {
         'author.fullName',
         'author.url',
         'author.iconUrl'
-        );
+    );
 
 }

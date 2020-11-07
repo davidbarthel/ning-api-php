@@ -4,7 +4,8 @@ namespace Ning\NingApiHelper\Objects;
 
 use Ning\NingApiHelper\NingObject;
 
-class NingGroup extends NingObject {
+class NingGroup extends NingObject
+{
 
     protected $objectKey = 'Group';
     protected $extraFields = array(
@@ -31,6 +32,6 @@ class NingGroup extends NingObject {
         'author.fullName',
         'author.url',
         'author.iconUrl'
-        );
+    );
 
 }

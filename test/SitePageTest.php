@@ -3,11 +3,13 @@
 
 use Ning\NingApiHelper\NingApi;
 
-class SitePageTest extends PHPUnit_Framework_TestCase {
+class SitePageTest extends PHPUnit_Framework_TestCase
+{
 
     protected $ningApi;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $subdomain = TestConfig::SUBDOMAIN;
 
         $consumer_key = TestConfig::CONSUMER_KEY;
@@ -20,7 +22,8 @@ class SitePageTest extends PHPUnit_Framework_TestCase {
         $this->ningApi->login(TestConfig::EMAIL, TestConfig::PASSWORD);
     }
 
-    private function create($customPath) {
+    private function create($customPath)
+    {
         $parts = array(
             'targetType' => 'customPage',
             'customPath' => $customPath,
@@ -34,12 +37,14 @@ class SitePageTest extends PHPUnit_Framework_TestCase {
         return $result;
     }
 
-    public function testCreate() {
+    public function testCreate()
+    {
         $result = $this->create('sitePageTestCreate');
         $this->assertTrue($result['success']);
     }
 
-    public function testGet() {
+    public function testGet()
+    {
         $result = $this->create('sitePageTestGet');
         $fields = 'targetType,published';
         $path = sprintf('SitePage/?id=%s&fields=%s', $result['id'], $fields);

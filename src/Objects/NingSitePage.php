@@ -4,7 +4,8 @@ namespace Ning\NingApiHelper\Objects;
 
 use Ning\NingApiHelper\NingObject;
 
-class NingSitePage extends NingObject {
+class NingSitePage extends NingObject
+{
 
     protected $objectKey = 'SitePage';
     protected $extraFields = array(
@@ -19,6 +20,6 @@ class NingSitePage extends NingObject {
         'author.fullName',
         'author.url',
         'author.iconUrl'
-        );
+    );
 
 }

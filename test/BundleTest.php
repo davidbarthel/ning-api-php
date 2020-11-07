@@ -3,11 +3,13 @@
 
 use Ning\NingApiHelper\NingApi;
 
-class BundleTest extends PHPUnit_Framework_TestCase {
+class BundleTest extends PHPUnit_Framework_TestCase
+{
 
     protected $ningApi;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $subdomain = TestConfig::SUBDOMAIN;
 
         $consumer_key = TestConfig::CONSUMER_KEY;
@@ -20,7 +22,8 @@ class BundleTest extends PHPUnit_Framework_TestCase {
         $this->ningApi->login(TestConfig::EMAIL, TestConfig::PASSWORD);
     }
 
-    private function getBundleId() {
+    private function getBundleId()
+    {
         $bundleId = 'none';
         $count = 1;
         $fields = 'id';
@@ -36,7 +39,8 @@ class BundleTest extends PHPUnit_Framework_TestCase {
         return $bundleId;
     }
 
-    public function testGet() {
+    public function testGet()
+    {
         $bundleId = $this->getBundleId();
         $fields = 'createdDate,author,entryContentType,categoryNames';
         $path = sprintf('Bundle/?id=%s&fields=%s', $bundleId, $fields);
@@ -45,7 +49,8 @@ class BundleTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    public function testRecent() {
+    public function testRecent()
+    {
         $count = 12;
         $fields = 'id,entryContentType,categoryNames';
         $path = sprintf('Bundle/recent?count=%s&fields=%s', $count,
@@ -57,7 +62,8 @@ class BundleTest extends PHPUnit_Framework_TestCase {
         return $result['entry'][0]['id'];
     }
 
-    protected function tearDown() {
-        $this->ningApi = NULL;
+    protected function tearDown()
+    {
+        $this->ningApi = null;
     }
 }

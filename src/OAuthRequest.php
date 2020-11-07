@@ -13,7 +13,7 @@ class OAuthRequest
     public static $version = '1.0';
     public static $POST_INPUT = 'php://input';
 
-    function __construct($http_method, $http_url, $parameters = NULL)
+    function __construct($http_method, $http_url, $parameters = null)
     {
         $parameters = ($parameters) ? $parameters : array();
         $parameters = array_merge(OAuthUtil::parse_parameters(parse_url($http_url, PHP_URL_QUERY)), $parameters);
@@ -25,7 +25,7 @@ class OAuthRequest
     /**
      * attempt to build up a request from what was passed to the server
      */
-    public static function from_request($http_method = NULL, $http_url = NULL, $parameters = NULL)
+    public static function from_request($http_method = null, $http_url = null, $parameters = null)
     {
         $scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http' : 'https';
         $http_url = ($http_url) ? $http_url : $scheme .
@@ -64,7 +64,8 @@ class OAuthRequest
 
             // We have a Authorization-header with OAuth data. Parse the header
             // and add those overriding any duplicates from GET or POST
-            if (isset($request_headers['Authorization']) && substr($request_headers['Authorization'], 0, 6) == 'OAuth ') {
+            if (isset($request_headers['Authorization']) && substr($request_headers['Authorization'], 0,
+                    6) == 'OAuth ') {
                 $header_parameters = OAuthUtil::split_header(
                     $request_headers['Authorization']
                 );
@@ -78,7 +79,7 @@ class OAuthRequest
     /**
      * pretty much a helper function to set up the request
      */
-    public static function from_consumer_and_token($consumer, $token, $http_method, $http_url, $parameters = NULL)
+    public static function from_consumer_and_token($consumer, $token, $http_method, $http_url, $parameters = null)
     {
         $parameters = ($parameters) ? $parameters : array();
         $defaults = array(
@@ -87,8 +88,9 @@ class OAuthRequest
             "oauth_timestamp" => OAuthRequest::generate_timestamp(),
             "oauth_consumer_key" => $consumer->key
         );
-        if ($token)
+        if ($token) {
             $defaults['oauth_token'] = $token->key;
+        }
 
         $parameters = array_merge($defaults, $parameters);
 
@@ -223,13 +225,15 @@ class OAuthRequest
         if ($realm) {
             $out = 'Authorization: OAuth realm="' . OAuthUtil::urlencode_rfc3986($realm) . '"';
             $first = false;
-        } else
+        } else {
             $out = 'Authorization: OAuth';
+        }
 
         $total = array();
         foreach ($this->parameters as $k => $v) {
-            if (substr($k, 0, 5) != "oauth")
+            if (substr($k, 0, 5) != "oauth") {
                 continue;
+            }
             if (is_array($v)) {
                 throw new OAuthException('Arrays not supported in headers');
             }

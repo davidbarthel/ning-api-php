@@ -1,6 +1,7 @@
 <?php
 
-class TestConfig {
+class TestConfig
+{
     const SUBDOMAIN = "apiexample";
 
     const CONSUMER_KEY = "0d716e57-5ada-4b29-a33c-2f4af1b26837";

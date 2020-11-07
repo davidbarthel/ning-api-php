@@ -4,7 +4,8 @@ namespace Ning\NingApiHelper\Objects;
 
 use Ning\NingApiHelper\NingObject;
 
-class NingPhoto extends NingObject {
+class NingPhoto extends NingObject
+{
 
     protected $objectKey = 'Photo';
 
@@ -24,6 +25,6 @@ class NingPhoto extends NingObject {
         'author.fullName',
         'author.url',
         'author.iconUrl'
-        );
+    );
 
 }

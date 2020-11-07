@@ -12,9 +12,11 @@ namespace Ning\NingApiHelper;
  * specification.
  *   - Chapter 9.3 ("RSA-SHA1")
  */
-abstract class OAuthSignatureMethod_RSA_SHA1 extends OAuthSignatureMethod {
+abstract class OAuthSignatureMethod_RSA_SHA1 extends OAuthSignatureMethod
+{
 
-    public function get_name() {
+    public function get_name()
+    {
         return "RSA-SHA1";
     }
 
@@ -32,7 +34,8 @@ abstract class OAuthSignatureMethod_RSA_SHA1 extends OAuthSignatureMethod {
     // Either way should return a string representation of the certificate
     protected abstract function fetch_private_cert(&$request);
 
-    public function build_signature($request, $consumer, $token) {
+    public function build_signature($request, $consumer, $token)
+    {
         $base_string = $request->get_signature_base_string();
         $request->base_string = $base_string;
 
@@ -51,7 +54,8 @@ abstract class OAuthSignatureMethod_RSA_SHA1 extends OAuthSignatureMethod {
         return base64_encode($signature);
     }
 
-    public function check_signature($request, $consumer, $token, $signature) {
+    public function check_signature($request, $consumer, $token, $signature)
+    {
         $decoded_sig = base64_decode($signature);
 
         $base_string = $request->get_signature_base_string();

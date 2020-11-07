@@ -3,11 +3,13 @@
 
 use Ning\NingApiHelper\NingApi;
 
-class TokenTest extends PHPUnit_Framework_TestCase {
+class TokenTest extends PHPUnit_Framework_TestCase
+{
 
     protected $ningApi;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $subdomain = TestConfig::SUBDOMAIN;
 
         $consumer_key = TestConfig::CONSUMER_KEY;
@@ -18,13 +20,15 @@ class TokenTest extends PHPUnit_Framework_TestCase {
         $this->ningApi = $ningApi;
     }
 
-    public function testLogin() {
+    public function testLogin()
+    {
         $result = $this->ningApi->login(TestConfig::EMAIL,
             TestConfig::PASSWORD);
         $this->assertTrue($result['success']);
     }
 
-    protected function tearDown() {
-        $this->ningApi = NULL;
+    protected function tearDown()
+    {
+        $this->ningApi = null;
     }
 }

@@ -10,7 +10,8 @@ use Ning\NingApiHelper\Objects\NingPhoto;
 use Ning\NingApiHelper\Objects\NingUser;
 
 
-class NingApi {
+class NingApi
+{
     const SECURE_PROTOCOL = 'https://';
     const INSECURE_PROTOCOL = 'http://';
     protected static $BASE_URL = 'external.ningapis.com/xn/rest';
@@ -34,14 +35,21 @@ class NingApi {
 
     protected $verifySslCertificates = true;
 
-    public static function instance() {
+    public static function instance()
+    {
         if (is_null(self::$_instance)) {
             self::$_instance = new NingApi();
         }
         return self::$_instance;
     }
 
-    public function __construct($subdomain=null, $consumerKey=null, $consumerSecret=null, $emailOrRequestKey=null, $passwordOrRequestSecret=null) {
+    public function __construct(
+        $subdomain = null,
+        $consumerKey = null,
+        $consumerSecret = null,
+        $emailOrRequestKey = null,
+        $passwordOrRequestSecret = null
+    ) {
         if ($subdomain) {
             $this->subdomain = $subdomain;
         }
@@ -56,11 +64,12 @@ class NingApi {
             $this->_initAuthTokens($this->consumerKey, $this->consumerSecret);
         }
 
-        if (preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/', $emailOrRequestKey) && preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/', $passwordOrRequestSecret)) {
+        if (preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/',
+                $emailOrRequestKey) && preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/',
+                $passwordOrRequestSecret)) {
             $this->setRequestTokens($emailOrRequestKey,
-                                    $passwordOrRequestSecret);
-        }
-        else {
+                $passwordOrRequestSecret);
+        } else {
             if ($emailOrRequestKey) {
                 $this->email = $emailOrRequestKey;
             }
@@ -78,11 +87,13 @@ class NingApi {
         self::$_instance = $this;
     }
 
-    public function setVersion($version) {
+    public function setVersion($version)
+    {
         self::$API_VERSION = $version;
     }
 
-    public function setBaseUrl($baseUrl) {
+    public function setBaseUrl($baseUrl)
+    {
         self::$BASE_URL = $baseUrl;
         echo "set base url successfully";
     }
@@ -92,22 +103,28 @@ class NingApi {
      * Set maximum number of seconds to allow cURL to execute
      * @param int $time
      */
-    public function setCurlTimeOut($time) {
+    public function setCurlTimeOut($time)
+    {
         self::$CURL_TIMEOUT = $time;
     }
 
-    public function setSslCertificateVerification($verify, $check = null) {
-        if ((! $verify) && ($check !== "I am only turning off SSL Certificate Verification because I am testing something and I promise I know what I am doing.")) {
-            NingException::generate(array('reason' => "Don't turn off SSL Certificate Verification unless you know what you are doing.",
-                                          'status' => 401,
-                                          'code' => 1,
-                                          'subcode' => 4));
+    public function setSslCertificateVerification($verify, $check = null)
+    {
+        if ((!$verify) && ($check !== "I am only turning off SSL Certificate Verification because I am testing something and I promise I know what I am doing.")) {
+            NingException::generate(array(
+                'reason' => "Don't turn off SSL Certificate Verification unless you know what you are doing.",
+                'status' => 401,
+                'code' => 1,
+                'subcode' => 4
+            ));
         }
-        $this->verifySslCertificates = (bool) $verify;
+        $this->verifySslCertificates = (bool)$verify;
         echo "set ssl verification to $verify";
     }
 
-    private function _requireUserSpecificData($required = array('subdomain', 'consumerKey', 'consumerSecret', 'requestToken')) {
+    private function _requireUserSpecificData(
+        $required = array('subdomain', 'consumerKey', 'consumerSecret', 'requestToken')
+    ) {
         foreach ($required as $val) {
             if (!$this->{$val}) {
                 throw new NingException("Failed to find the value for '$val'");
@@ -115,13 +132,15 @@ class NingApi {
         }
     }
 
-    private function _initAuthTokens($consumerKey, $consumerSecret) {
+    private function _initAuthTokens($consumerKey, $consumerSecret)
+    {
         $this->consumerToken = new OAuthConsumer($consumerKey, $consumerSecret);
         $this->signatureMethod = new OAuthSignatureMethod_HMAC_SHA1();
         self::$_instance = $this;
     }
 
-    private function _initNingObjects() {
+    private function _initNingObjects()
+    {
         $this->blogPost = new NingBlogPost();
         $this->comment = new NingComment();
         $this->network = new NingNetwork();
@@ -129,30 +148,34 @@ class NingApi {
         $this->user = new NingUser();
     }
 
-    public function setSubdomain($subdomain) {
+    public function setSubdomain($subdomain)
+    {
         $this->subdomain = $subdomain;
         self::$_instance = $this;
     }
 
-    public function setConsumerTokens($consumerKey, $consumerSecret) {
+    public function setConsumerTokens($consumerKey, $consumerSecret)
+    {
         $this->consumerKey = $consumerKey;
         $this->consumerSecret = $consumerSecret;
         $this->_initAuthTokens($this->consumerKey, $this->consumerSecret);
         self::$_instance = $this;
     }
 
-    public function setRequestTokens($key, $secret) {
+    public function setRequestTokens($key, $secret)
+    {
         $this->oauthToken = $key;
         $this->oauthTokenSecret = $secret;
         $this->requestToken = new OAuthConsumer($this->oauthToken, $this->oauthTokenSecret);
     }
 
-    public function login($email, $password) {
-        try{
-            $this->_requireUserSpecificData(array('subdomain','consumerKey','consumerSecret'));
-        }catch(Exception $e){
+    public function login($email, $password)
+    {
+        try {
+            $this->_requireUserSpecificData(array('subdomain', 'consumerKey', 'consumerSecret'));
+        } catch (Exception $e) {
             $message = $e->getMessage();
-            throw new NingException("You must specify the subdomain, consumerKey, and consumerSecret before calling login(). ".$message);
+            throw new NingException("You must specify the subdomain, consumerKey, and consumerSecret before calling login(). " . $message);
         }
         $this->email = $email;
         $this->password = $password;
@@ -160,9 +183,9 @@ class NingApi {
         $headers = array(
             'Authorization: Basic ' . $credentials
         );
-        $result = $this->post('Token', NULL, $headers, true);
+        $result = $this->post('Token', null, $headers, true);
         $this->setRequestTokens($result['entry']['oauthToken'],
-                                $result['entry']['oauthTokenSecret']);
+            $result['entry']['oauthTokenSecret']);
         self::$_instance = $this;
         return $result;
     }
@@ -170,7 +193,8 @@ class NingApi {
     /**
      * Create a Ning API request URL
      */
-    public function buildUrl($path, $secure=TRUE, $version='2.0') {
+    public function buildUrl($path, $secure = true, $version = '2.0')
+    {
         $protocol = $secure ? self::SECURE_PROTOCOL : self::INSECURE_PROTOCOL;
         $base = $protocol . self::$BASE_URL;
         $parts = array($base, $this->subdomain, $version, $path);
@@ -181,8 +205,9 @@ class NingApi {
     /**
      * Call the Ning API
      */
-    public function call($path, $method='GET', $body=NULL, $headers=NULL, $secure=TRUE) {
-        if($path == 'Token'){
+    public function call($path, $method = 'GET', $body = null, $headers = null, $secure = true)
+    {
+        if ($path == 'Token') {
             $version = '1.0';
         } else {
             //unless we're authenticating, we need all user data
@@ -194,21 +219,21 @@ class NingApi {
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_TIMEOUT, self::$CURL_TIMEOUT);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $isMultipart = $this->isMultipart($body);
 
         if ($isMultipart) {
             // Don't include the body params for multipart requests
             $oauth_req = OAuthRequest::from_consumer_and_token($this->consumerToken,
-                            $this->requestToken, $method, $url);
+                $this->requestToken, $method, $url);
         } else {
             $oauth_req = OAuthRequest::from_consumer_and_token($this->consumerToken,
-                            $this->requestToken, $method, $url, $body);
+                $this->requestToken, $method, $url, $body);
         }
 
         $oauth_req->sign_request($this->signatureMethod, $this->consumerToken,
-                $this->requestToken);
+            $this->requestToken);
 
         if ($method === 'POST' || $method === 'PUT') {
 
@@ -219,20 +244,22 @@ class NingApi {
             } else {
                 // Send as application/x-www-form-urlencoded
                 curl_setopt($ch, CURLOPT_POSTFIELDS,
-                        $oauth_req->to_postdata());
+                    $oauth_req->to_postdata());
             }
 
             curl_setopt($ch, CURLOPT_URL,
-                    $oauth_req->get_normalized_http_url());
+                $oauth_req->get_normalized_http_url());
 
             if ($method === 'PUT') {
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
             }
-        } else if ($method === 'DELETE') {
-            curl_setopt($ch, CURLOPT_URL, $oauth_req->to_url());
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
         } else {
-            curl_setopt($ch, CURLOPT_URL, $oauth_req->to_url());
+            if ($method === 'DELETE') {
+                curl_setopt($ch, CURLOPT_URL, $oauth_req->to_url());
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+            } else {
+                curl_setopt($ch, CURLOPT_URL, $oauth_req->to_url());
+            }
         }
 
 
@@ -259,7 +286,7 @@ class NingApi {
 
         curl_close($ch);
 
-        $result = json_decode($json, TRUE);
+        $result = json_decode($json, true);
 
         if (!$result['success']) {
             throw NingException::generate($result);
@@ -268,19 +295,23 @@ class NingApi {
         return $result;
     }
 
-    public function post($path, $body=NULL, $headers=NULL, $secure=true) {
+    public function post($path, $body = null, $headers = null, $secure = true)
+    {
         return $this->call($path, 'POST', $body, $headers, $secure);
     }
 
-    public function put($path, $body=NULL, $headers=NULL, $secure=true) {
+    public function put($path, $body = null, $headers = null, $secure = true)
+    {
         return $this->call($path, 'PUT', $body, $headers, $secure);
     }
 
-    public function delete($path, $body=NULL, $headers=NULL, $secure=true) {
+    public function delete($path, $body = null, $headers = null, $secure = true)
+    {
         return $this->call($path, 'DELETE', $body, $headers, $secure);
     }
 
-    public function get($path, $body=NULL, $headers=NULL, $secure=true) {
+    public function get($path, $body = null, $headers = null, $secure = true)
+    {
         return $this->call($path, 'GET', $body, $headers, $secure);
     }
 
@@ -292,9 +323,10 @@ class NingApi {
      * @param $body array key=>value pairs of request body items
      * @return boolean
      */
-    protected function isMultipart($body){
+    protected function isMultipart($body)
+    {
         if (is_array($body)) {
-            foreach ($body as $name => $value){
+            foreach ($body as $name => $value) {
                 if ($value instanceof NingUpload) {
                     return true;
                 }
@@ -307,10 +339,11 @@ class NingApi {
      * Transform the provided request body elements into the proper
      * key=>value pairs that curl expects
      */
-    protected function transformMultipartBody($body) {
+    protected function transformMultipartBody($body)
+    {
         foreach ($body as $name => $value) {
             if ($value instanceof NingUpload) {
-                $body[$name] = (string) $value;
+                $body[$name] = (string)$value;
             }
         }
         return $body;

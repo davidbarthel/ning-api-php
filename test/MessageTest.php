@@ -3,11 +3,13 @@
 
 use Ning\NingApiHelper\NingApi;
 
-class MessageTest extends PHPUnit_Framework_TestCase {
+class MessageTest extends PHPUnit_Framework_TestCase
+{
 
     protected $ningApi;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $subdomain = TestConfig::SUBDOMAIN;
 
         $consumer_key = TestConfig::CONSUMER_KEY;
@@ -20,7 +22,8 @@ class MessageTest extends PHPUnit_Framework_TestCase {
         $this->ningApi->login(TestConfig::EMAIL, TestConfig::PASSWORD);
     }
 
-    private function create() {
+    private function create()
+    {
         $recipients = $this->getRecipients();
         $parts = array(
             'recipients' => $recipients,
@@ -35,7 +38,8 @@ class MessageTest extends PHPUnit_Framework_TestCase {
         return $result;
     }
 
-    private function getRecipients() {
+    private function getRecipients()
+    {
         $count = 3;
         $fields = 'title';
         $path = sprintf('User/recent?count=%s&fields=%s', $count,
@@ -49,7 +53,8 @@ class MessageTest extends PHPUnit_Framework_TestCase {
         return json_encode($recipients);
     }
 
-    public function testInbox() {
+    public function testInbox()
+    {
         $fields = 'id,createdDate,sender,subject';
         $path = sprintf('Message/inbox?fields=%s', $fields);
 
@@ -59,7 +64,8 @@ class MessageTest extends PHPUnit_Framework_TestCase {
         return $result;
     }
 
-    public function testSent() {
+    public function testSent()
+    {
         $count = 3;
         $fields = 'id,createdDate,subject,recipients';
         $path = sprintf('Message/sent?count=%s&fields=%s', $count,
@@ -71,7 +77,8 @@ class MessageTest extends PHPUnit_Framework_TestCase {
         return $result;
     }
 
-    public function testArchive() {
+    public function testArchive()
+    {
         $count = 3;
         $fields = 'createdDate,sender,subject';
         $path = sprintf('Message/archive?count=%s&fields=%s', $count,
@@ -81,12 +88,14 @@ class MessageTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    public function testCreate() {
+    public function testCreate()
+    {
         $result = $this->create();
         $this->assertTrue($result['success']);
     }
 
-    public function testUpdate() {
+    public function testUpdate()
+    {
         $this->create();
         $result = $this->testSent();
         $id = $result['entry'][0]['id'];
@@ -100,7 +109,8 @@ class MessageTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    protected function tearDown() {
-        $this->ningApi = NULL;
+    protected function tearDown()
+    {
+        $this->ningApi = null;
     }
 }

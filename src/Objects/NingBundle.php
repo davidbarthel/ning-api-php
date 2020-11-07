@@ -4,7 +4,8 @@ namespace Ning\NingApiHelper\Objects;
 
 use Ning\NingApiHelper\NingObject;
 
-class NingBundle extends NingObject {
+class NingBundle extends NingObject
+{
 
     protected $objectKey = 'Bundle';
     protected $extraFields = array(

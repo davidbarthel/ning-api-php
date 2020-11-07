@@ -4,7 +4,8 @@ namespace Ning\NingApiHelper\Objects;
 
 use Ning\NingApiHelper\NingObject;
 
-class NingNetwork extends NingObject {
+class NingNetwork extends NingObject
+{
 
     protected $objectKey = 'Network';
     protected $extraFields = array(
@@ -14,6 +15,6 @@ class NingNetwork extends NingObject {
         'defaultUserIconUrl',
         'apiVersions',
         'profileQuestions'
-        );
+    );
 
 }

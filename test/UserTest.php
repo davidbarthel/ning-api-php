@@ -3,11 +3,13 @@
 
 use Ning\NingApiHelper\NingApi;
 
-class UserTest extends PHPUnit_Framework_TestCase {
+class UserTest extends PHPUnit_Framework_TestCase
+{
 
     protected $ningApi;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $subdomain = TestConfig::SUBDOMAIN;
 
         $consumer_key = TestConfig::CONSUMER_KEY;
@@ -20,9 +22,10 @@ class UserTest extends PHPUnit_Framework_TestCase {
         $this->ningApi->login(TestConfig::EMAIL, TestConfig::PASSWORD);
     }
 
-    public function create($n) {
+    public function create($n)
+    {
         $parts = array(
-            'email' => 'testUser'.$n.'@ning.com',
+            'email' => 'testUser' . $n . '@ning.com',
             'password' => 'Test1234',
             'fullName' => 'User Create Test'
         );
@@ -33,12 +36,14 @@ class UserTest extends PHPUnit_Framework_TestCase {
         return $result;
     }
 
-    public function testCreate() {
+    public function testCreate()
+    {
         $result = $this->create(1);
         $this->assertTrue($result['success']);
     }
 
-    public function testUpdate() {
+    public function testUpdate()
+    {
         $result = $this->create(2);
         $parts = array(
             'id' => $result['id'],
@@ -49,7 +54,8 @@ class UserTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    public function testGet() {
+    public function testGet()
+    {
         $result = $this->create(3);
         $fields = 'email,fullName';
         $path = sprintf('User/?id=%s&fields=%s', $result['id'], $fields);
@@ -58,7 +64,8 @@ class UserTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    public function testRecent() {
+    public function testRecent()
+    {
         $count = 3;
         $fields = 'fullName,createdDate';
         $path = sprintf('User/recent?count=%s&fields=%s', $count,
@@ -68,7 +75,8 @@ class UserTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    public function testFeatured() {
+    public function testFeatured()
+    {
         $count = 3;
         $fields = 'fullName,featuredDate';
         $path = sprintf('User/featured?count=%s&fields=%s', $count,
@@ -78,7 +86,8 @@ class UserTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    public function testPending() {
+    public function testPending()
+    {
         $count = 3;
         $fields = 'fullName,createdDate';
         $path = sprintf('User/pending?count=%s&fields=%s', $count,
@@ -88,7 +97,8 @@ class UserTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    protected function tearDown() {
-        $this->ningApi = NULL;
+    protected function tearDown()
+    {
+        $this->ningApi = null;
     }
 }

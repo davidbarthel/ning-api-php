@@ -3,11 +3,13 @@
 
 use Ning\NingApiHelper\NingApi;
 
-class MemberCategoryTest extends PHPUnit_Framework_TestCase {
+class MemberCategoryTest extends PHPUnit_Framework_TestCase
+{
 
     protected $ningApi;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $subdomain = TestConfig::SUBDOMAIN;
 
         $consumer_key = TestConfig::CONSUMER_KEY;
@@ -20,7 +22,8 @@ class MemberCategoryTest extends PHPUnit_Framework_TestCase {
         $this->ningApi->login(TestConfig::EMAIL, TestConfig::PASSWORD);
     }
 
-    public function testRecent() {
+    public function testRecent()
+    {
         $count = 9;
         $fields = 'title,imageUrl';
         $path = sprintf('MemberCategory/recent?count=%s&fields=%s', $count,
@@ -30,7 +33,8 @@ class MemberCategoryTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    protected function tearDown() {
-        $this->ningApi = NULL;
+    protected function tearDown()
+    {
+        $this->ningApi = null;
     }
 }

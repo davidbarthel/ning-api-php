@@ -3,11 +3,13 @@
 
 use Ning\NingApiHelper\NingApi;
 
-class GroupTest extends PHPUnit_Framework_TestCase {
+class GroupTest extends PHPUnit_Framework_TestCase
+{
 
     protected $ningApi;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $subdomain = TestConfig::SUBDOMAIN;
 
         $consumer_key = TestConfig::CONSUMER_KEY;
@@ -20,7 +22,8 @@ class GroupTest extends PHPUnit_Framework_TestCase {
         $this->ningApi->login(TestConfig::EMAIL, TestConfig::PASSWORD);
     }
 
-    private function create() {
+    private function create()
+    {
         $parts = array(
             'title' => 'Group Title',
             'description' => 'Group Description',
@@ -33,7 +36,8 @@ class GroupTest extends PHPUnit_Framework_TestCase {
         return $result;
     }
 
-    public function testGet() {
+    public function testGet()
+    {
         $result = $this->create();
         $fields = 'title,description,joinSetting';
         $path = sprintf('Group/?id=%s&fields=%s', $result['id'], $fields);
@@ -42,7 +46,8 @@ class GroupTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    public function testRecent() {
+    public function testRecent()
+    {
         $count = 3;
         $fields = 'title,description,joinSetting';
         $path = sprintf('Group/recent?count=%s&fields=%s', $count,
@@ -52,7 +57,8 @@ class GroupTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    public function testFeatured() {
+    public function testFeatured()
+    {
         $count = 3;
         $fields = 'title,description,joinSetting';
         $path = sprintf('Group/featured?count=%s&fields=%s', $count,
@@ -62,12 +68,14 @@ class GroupTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    public function testCreate() {
+    public function testCreate()
+    {
         $result = $this->create();
         $this->assertTrue($result['success']);
     }
 
-    public function testUpdate() {
+    public function testUpdate()
+    {
         $result = $this->create();
 
         $parts = array(
@@ -81,7 +89,8 @@ class GroupTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    public function testDelete() {
+    public function testDelete()
+    {
         $result = $this->create();
 
         $path = sprintf('Group?id=%s', $result['id']);
@@ -90,7 +99,8 @@ class GroupTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    public function testCount() {
+    public function testCount()
+    {
         date_default_timezone_set('UTC');
         $date = date('Y-m-d\TH:i:s\Z', strtotime('-2 days'));
 
@@ -99,7 +109,8 @@ class GroupTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    protected function tearDown() {
-        $this->ningApi = NULL;
+    protected function tearDown()
+    {
+        $this->ningApi = null;
     }
 }

@@ -3,11 +3,13 @@
 
 use Ning\NingApiHelper\NingApi;
 
-class NetworkTest extends PHPUnit_Framework_TestCase {
+class NetworkTest extends PHPUnit_Framework_TestCase
+{
 
     protected $ningApi;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $subdomain = TestConfig::SUBDOMAIN;
 
         $consumer_key = TestConfig::CONSUMER_KEY;
@@ -20,7 +22,8 @@ class NetworkTest extends PHPUnit_Framework_TestCase {
         $this->ningApi->login(TestConfig::EMAIL, TestConfig::PASSWORD);
     }
 
-    public function testGet() {
+    public function testGet()
+    {
         $fields = 'subdomain, author, profileQuestions';
         $path = sprintf('Network/?fields=%s', $fields);
 
@@ -28,7 +31,8 @@ class NetworkTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result['success']);
     }
 
-    protected function tearDown() {
-        $this->ningApi = NULL;
+    protected function tearDown()
+    {
+        $this->ningApi = null;
     }
 }

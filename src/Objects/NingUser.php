@@ -4,7 +4,8 @@ namespace Ning\NingApiHelper\Objects;
 
 use Ning\NingApiHelper\NingObject;
 
-class NingUser extends NingObject {
+class NingUser extends NingObject
+{
 
     protected $objectKey = 'User';
     protected $extraFields = array(
@@ -33,9 +34,11 @@ class NingUser extends NingObject {
         'profileQuestions',
         'author.fullName',
         'author.iconUrl',
-        'author.url');
+        'author.url'
+    );
 
-    public function addStatusMessage($userId, $message, $args = array()) {
+    public function addStatusMessage($userId, $message, $args = array())
+    {
         $args = array(
             "id" => $userId,
             "statusMessage" => $message

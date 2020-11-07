@@ -9,14 +9,16 @@ class OAuthUtil
     {
         if (is_array($input)) {
             return array_map(array(OAuthUtil::class, 'urlencode_rfc3986'), $input);
-        } else if (is_scalar($input)) {
-            return str_replace(
-                '+',
-                ' ',
-                str_replace('%7E', '~', rawurlencode($input))
-            );
         } else {
-            return '';
+            if (is_scalar($input)) {
+                return str_replace(
+                    '+',
+                    ' ',
+                    str_replace('%7E', '~', rawurlencode($input))
+                );
+            } else {
+                return '';
+            }
         }
     }
 
@@ -36,7 +38,8 @@ class OAuthUtil
     public static function split_header($header, $only_allow_oauth_parameters = true)
     {
         $params = array();
-        if (preg_match_all('/(' . ($only_allow_oauth_parameters ? 'oauth_' : '') . '[a-z_-]*)=(:?"([^"]*)"|([^,]*))/', $header, $matches)) {
+        if (preg_match_all('/(' . ($only_allow_oauth_parameters ? 'oauth_' : '') . '[a-z_-]*)=(:?"([^"]*)"|([^,]*))/',
+            $header, $matches)) {
             foreach ($matches[1] as $i => $h) {
                 $params[$h] = OAuthUtil::urldecode_rfc3986(empty($matches[3][$i]) ? $matches[4][$i] : $matches[3][$i]);
             }
@@ -72,10 +75,12 @@ class OAuthUtil
             // otherwise we don't have apache and are just going to have to hope
             // that $_SERVER actually contains what we need
             $out = array();
-            if (isset($_SERVER['CONTENT_TYPE']))
+            if (isset($_SERVER['CONTENT_TYPE'])) {
                 $out['Content-Type'] = $_SERVER['CONTENT_TYPE'];
-            if (isset($_ENV['CONTENT_TYPE']))
+            }
+            if (isset($_ENV['CONTENT_TYPE'])) {
                 $out['Content-Type'] = $_ENV['CONTENT_TYPE'];
+            }
 
             foreach ($_SERVER as $key => $value) {
                 if (substr($key, 0, 5) == "HTTP_") {
@@ -99,8 +104,9 @@ class OAuthUtil
     // array('a' => array('b','c'), 'd' => 'e')
     public static function parse_parameters($input)
     {
-        if (!isset($input) || !$input)
+        if (!isset($input) || !$input) {
             return array();
+        }
 
         $pairs = explode('&', $input);
 
@@ -130,8 +136,9 @@ class OAuthUtil
 
     public static function build_http_query($params)
     {
-        if (!$params)
+        if (!$params) {
             return '';
+        }
 
         // Urlencode both keys and values
         $keys = OAuthUtil::urlencode_rfc3986(array_keys($params));

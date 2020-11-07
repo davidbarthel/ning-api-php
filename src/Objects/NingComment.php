@@ -4,7 +4,8 @@ namespace Ning\NingApiHelper\Objects;
 
 use Ning\NingApiHelper\NingObject;
 
-class NingComment extends NingObject {
+class NingComment extends NingObject
+{
 
     protected $objectKey = 'Comment';
     protected $extraFields = array(
@@ -18,6 +19,7 @@ class NingComment extends NingObject {
         'attachedToAuthor.iconUrl',
         'author.fullName',
         'author.url',
-        'author.iconUrl');
+        'author.iconUrl'
+    );
 
 }
